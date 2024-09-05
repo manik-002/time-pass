@@ -3,12 +3,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const AuthRouter = require('./Routes/AuthRouter.js');
-const mongoose = require('mongoose');
-const createAdminAccount = require('./scripts/createadmin.js');
-const errorHandler = require("./Middlewares/error.js");
 const UserRouter = require('./Routes/UserRouter.js');
 const JobstypeRouter = require('./Routes/JobstypeRouter.js');
 const Jobrouter = require('./Routes/Jobrouter.js');
+const mongoose = require('mongoose');
+const createAdminAccount = require('./scripts/createadmin.js');
+const errorHandler = require("./Middlewares/error.js");
+
 require('dotenv').config();
 //database connection
 mongoose.connect(process.env.DATABASE, {
@@ -31,17 +32,19 @@ app.get('/ping', (req, res) => {
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/auth', AuthRouter);
+app.use('/user', UserRouter);
+app.use('/user', JobstypeRouter);
+app.use('/user', Jobrouter);
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)
 });
 
-app.use('/user', UserRouter);
-app.use('/user', JobstypeRouter);
-app.use('/user', Jobrouter);
+
 
 __dirname = path.resolve()
-
 
 app.use(errorHandler);
 

@@ -1,8 +1,9 @@
 const User = require('../models/User');
 const ErrorResponse = require('../errorResponse');
+const { model } = require('mongoose');
 
 //load all users
-exports.allUsers = async (req, res, next) => {
+const allUsers = async (req, res, next) => {
     //enable pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -28,7 +29,7 @@ exports.allUsers = async (req, res, next) => {
 };
 
 //show single user
-exports.singleUser = async (req, res, next) => {
+const singleUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
         res.status(200).json({
@@ -44,7 +45,7 @@ exports.singleUser = async (req, res, next) => {
 
 
 //edit user
-exports.editUser = async (req, res, next) => {
+const editUser = async (req, res, next) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).json({
@@ -59,7 +60,7 @@ exports.editUser = async (req, res, next) => {
 };
 
 //delete user
-exports.deleteUser = async (req, res, next) => {
+const deleteUser = async (req, res, next) => {
     try {
         const user = await User.findByIdAndRemove(req.params.id);
         res.status(200).json({
@@ -75,7 +76,7 @@ exports.deleteUser = async (req, res, next) => {
 
 
 //jobs history
-exports.createUserJobsHistory = async (req, res, next) => {
+const createUserJobsHistory = async (req, res, next) => {
     const { title, description, salary, location } = req.body;
 
     try {
@@ -104,3 +105,11 @@ exports.createUserJobsHistory = async (req, res, next) => {
         return next(error);
     }
 };
+
+module.exports = {
+    allUsers,
+    singleUser,
+    editUser,
+    deleteUser,
+    createUserJobsHistory
+}
