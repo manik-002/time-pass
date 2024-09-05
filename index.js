@@ -2,16 +2,14 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const AuthRouter = require('./Routes/AuthRouter');
+const AuthRouter = require('./Routes/AuthRouter.js');
 const mongoose = require('mongoose');
-const createAdminAccount = require('../backend/scripts/createadmin.js');
+const createAdminAccount = require('./scripts/createadmin.js');
+const errorHandler = require("./Middlewares/error.js");
+const UserRouter = require('./Routes/UserRouter.js');
+const JobstypeRouter = require('./Routes/JobstypeRouter.js');
+const Jobrouter = require('./Routes/Jobrouter.js');
 require('dotenv').config();
-const errorHandler = require("./Middlewares/error");
-const authRoutes = require('./Routes/AuthRouter');
-const userRoutes = require('./Routes/UserRouter');
-const jobTypeRoute = require('./Routes/JobstypeRouter');
-const jobRoute = require('./Routes/Jobrouter');
-
 //database connection
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
